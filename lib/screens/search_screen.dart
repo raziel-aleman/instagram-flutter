@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:instagram_flutter/screens/profile_screen.dart';
 import 'package:instagram_flutter/utils/colors.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:instagram_flutter/utils/global_variables.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -23,6 +25,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
@@ -55,17 +59,27 @@ class _SearchScreenState extends State<SearchScreen> {
                 return ListView.builder(
                   itemCount: (snapshot.data! as dynamic).docs.length,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: CircleAvatar(
-                          backgroundImage: (snapshot.data! as dynamic)
-                                      .docs[index]['photoUrl'] ==
-                                  ''
-                              ? const AssetImage('assets/defaultProfilePic.png')
-                                  as ImageProvider
-                              : NetworkImage((snapshot.data! as dynamic)
-                                  .docs[index]['photoUrl'])),
-                      title: Text(
-                        (snapshot.data! as dynamic).docs[index]['username'],
+                    return InkWell(
+                      child: ListTile(
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ProfileScreen(
+                                uid: (snapshot.data! as dynamic).docs[index]
+                                    ['uid']),
+                          ),
+                        ),
+                        leading: CircleAvatar(
+                            backgroundImage: (snapshot.data! as dynamic)
+                                        .docs[index]['photoUrl'] ==
+                                    ''
+                                ? const AssetImage(
+                                        'assets/defaultProfilePic.png')
+                                    as ImageProvider
+                                : NetworkImage((snapshot.data! as dynamic)
+                                    .docs[index]['photoUrl'])),
+                        title: Text(
+                          (snapshot.data! as dynamic).docs[index]['username'],
+                        ),
                       ),
                     );
                   },
@@ -83,15 +97,20 @@ class _SearchScreenState extends State<SearchScreen> {
 
                 return StaggeredGridView.countBuilder(
                   crossAxisCount: 3,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 8.0,
+                  crossAxisSpacing: 8.0,
                   itemCount: (snapshot.data! as dynamic).docs.length,
                   itemBuilder: (context, index) => Image.network(
                       (snapshot.data! as dynamic).docs[index]['postUrl']),
-                  staggeredTileBuilder: (index) => StaggeredTile.count(
-                    (index % 5 == 0) ? 2 : 1,
-                    (index % 5 == 0) ? 2 : 1,
-                  ),
+                  staggeredTileBuilder: (index) => width > webScreenSize
+                      ? StaggeredTile.count(
+                          (index % 7 == 0) ? 1 : 1,
+                          (index % 7 == 0) ? 1 : 1,
+                        )
+                      : StaggeredTile.count(
+                          (index % 7 == 0) ? 1 : 1,
+                          (index % 7 == 0) ? 1 : 1,
+                        ),
                 );
               },
             ),
