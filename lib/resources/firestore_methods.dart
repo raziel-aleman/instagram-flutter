@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:instagram_flutter/models/post.dart';
 import 'package:instagram_flutter/resources/storage_methods.dart';
 import 'package:uuid/uuid.dart';
@@ -59,7 +57,7 @@ class FirestoreMethods {
         });
       }
     } catch (e) {
-      print(e.toString());
+      //print(e.toString());
     }
   }
 
@@ -82,12 +80,12 @@ class FirestoreMethods {
           'datePublished': DateTime.now(),
         });
       } else {
-        print('Text is empty');
+        //print('Text is empty');
       }
     } catch (e) {
-      print(
-        e.toString(),
-      );
+      // print(
+      //   e.toString(),
+      // );
     }
   }
 
@@ -97,7 +95,7 @@ class FirestoreMethods {
     try {
       await _firestore.collection('posts').doc(postId).delete();
     } catch (err) {
-      print(err.toString());
+      //print(err.toString());
     }
   }
 
@@ -125,7 +123,7 @@ class FirestoreMethods {
         });
       }
     } catch (e) {
-      print(e.toString());
+      //print(e.toString());
     }
   }
 }

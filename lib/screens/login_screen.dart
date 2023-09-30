@@ -25,7 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
@@ -40,7 +39,8 @@ class _LoginScreenState extends State<LoginScreen> {
       password: _passwordController.text,
     );
 
-    if (res == 'success') {
+    if (res == 'success' && mounted) {
+      //if (mounted) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => const ResponsiveLayout(
@@ -49,6 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       );
+      //}
       //
     } else {
       //
@@ -82,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Flexible(child: Container(), flex: 2),
+              Flexible(flex: 2, child: Container()),
               // svg image
               SvgPicture.asset(
                 'assets/logo.svg',
@@ -125,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: blueColor,
                   ),
                   child: _isLoading
-                      ? Center(
+                      ? const Center(
                           child: CircularProgressIndicator(
                             color: primaryColor,
                           ),
@@ -136,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 24,
               ),
-              Flexible(child: Container(), flex: 2),
+              Flexible(flex: 2, child: Container()),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

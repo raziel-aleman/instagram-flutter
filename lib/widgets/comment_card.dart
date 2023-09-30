@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_flutter/models/user.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-
-import '../providers/user_provider.dart';
 
 class CommentCard extends StatefulWidget {
-  final snap;
+  final dynamic snap;
   const CommentCard({super.key, required this.snap});
 
   @override

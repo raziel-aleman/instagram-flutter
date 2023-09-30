@@ -9,7 +9,7 @@ import '../providers/user_provider.dart';
 import '../widgets/comment_card.dart';
 
 class CommentsScreen extends StatefulWidget {
-  final snap;
+  final dynamic snap;
   const CommentsScreen({super.key, required this.snap});
 
   @override
@@ -21,7 +21,6 @@ class _CommentsScreenState extends State<CommentsScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _commentController.dispose();
   }

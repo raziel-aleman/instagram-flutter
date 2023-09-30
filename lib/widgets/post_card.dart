@@ -12,7 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class PostCard extends StatefulWidget {
-  final snap;
+  final dynamic snap;
   const PostCard({
     super.key,
     required this.snap,
@@ -28,7 +28,6 @@ class _PostCardState extends State<PostCard> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getComments();
   }

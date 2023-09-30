@@ -11,7 +11,7 @@ class FeedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    final double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       backgroundColor:
@@ -34,17 +34,20 @@ class FeedScreen extends StatelessWidget {
               ],
             ),
       body: StreamBuilder(
+        //initialData: ,
         stream: FirebaseFirestore.instance
             .collection('posts')
             .orderBy('datePublished', descending: true)
             .snapshots(),
         builder: (context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+          //if (snapshot.connectionState == ConnectionState.waiting) {
+          if (!snapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
+          //if (snapshot.hasData) {
           return ListView.builder(
             itemCount: snapshot.data?.docs.length,
             itemBuilder: (context, index) => Container(
@@ -57,6 +60,7 @@ class FeedScreen extends StatelessWidget {
               ),
             ),
           );
+          //}
         },
       ),
     );

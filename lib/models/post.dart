@@ -5,10 +5,10 @@ class Post {
   String? uid;
   String? username;
   String? postId;
-  late final datePublished;
+  late final DateTime? datePublished;
   String? postUrl;
   String? profImage;
-  late final likes;
+  late final List<dynamic>? likes;
 
   Post(
       {required this.description,
