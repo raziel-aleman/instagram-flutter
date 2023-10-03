@@ -52,7 +52,14 @@ class _LoginScreenState extends State<LoginScreen> {
       //}
       //
     } else {
-      //
+      // invalid-email:
+      // Thrown if the email address is not valid.
+      // user-disabled:
+      // Thrown if the user corresponding to the given email has been disabled.
+      // user-not-found:
+      // Thrown if there is no user corresponding to the given email.
+      // wrong-password:
+      // Thrown if the password is invalid for the given email, or the account corresponding to the email does not have a password set.
       showSnackBar(res, context);
     }
 
@@ -92,21 +99,49 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 64),
               // text field input for email
-              TextFieldInput(
-                textEditingController: _emailController,
-                hintText: 'Enter your email',
-                textInputType: TextInputType.emailAddress,
-              ),
+              MediaQuery.of(context).size.width > webScreenSize
+                  ? TextField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(
+                        hintText: 'Enter your email',
+                        filled: true,
+                        fillColor: Color.fromARGB(25, 255, 255, 255),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5.0))),
+                      ),
+                    )
+                  : TextFieldInput(
+                      textEditingController: _emailController,
+                      hintText: 'Enter your email',
+                      textInputType: TextInputType.emailAddress,
+                    ),
               const SizedBox(
                 height: 24,
               ),
               // text field input for password
-              TextFieldInput(
-                textEditingController: _passwordController,
-                hintText: 'Enter your password',
-                textInputType: TextInputType.text,
-                isPass: true,
-              ),
+              MediaQuery.of(context).size.width > webScreenSize
+                  ? TextField(
+                      controller: _passwordController,
+                      onSubmitted: (value) {
+                        loginUser();
+                      },
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        hintText: 'Enter your password',
+                        filled: true,
+                        fillColor: Color.fromARGB(25, 255, 255, 255),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5.0))),
+                      ),
+                    )
+                  : TextFieldInput(
+                      textEditingController: _passwordController,
+                      hintText: 'Enter your password',
+                      textInputType: TextInputType.text,
+                      isPass: true,
+                    ),
               const SizedBox(
                 height: 24,
               ),

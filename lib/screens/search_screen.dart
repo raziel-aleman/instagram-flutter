@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_flutter/screens/profile_screen.dart';
 import 'package:instagram_flutter/utils/colors.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:instagram_flutter/utils/global_variables.dart';
+//import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+//import 'package:instagram_flutter/utils/global_variables.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -24,7 +24,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    //final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
@@ -94,7 +94,27 @@ class _SearchScreenState extends State<SearchScreen> {
                   );
                 }
 
-                return StaggeredGridView.countBuilder(
+                return GridView.builder(
+                  shrinkWrap: true,
+                  itemCount: (snapshot.data! as dynamic).docs.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 1.5,
+                    childAspectRatio: 1,
+                  ),
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot snap =
+                        (snapshot.data! as dynamic).docs[index];
+
+                    return Image(
+                      image: NetworkImage((snap.data()! as dynamic)['postUrl']),
+                      fit: BoxFit.cover,
+                    );
+                  },
+                );
+                // Alternative grid view
+                /*StaggeredGridView.countBuilder(
                   crossAxisCount: 3,
                   mainAxisSpacing: 8.0,
                   crossAxisSpacing: 8.0,
@@ -110,7 +130,8 @@ class _SearchScreenState extends State<SearchScreen> {
                           (index % 7 == 0) ? 1 : 1,
                           (index % 7 == 0) ? 1 : 1,
                         ),
-                );
+                  shrinkWrap: true,
+                ); */
               },
             ),
     );
